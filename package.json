@@ -1,0 +1,31 @@
+{
+  "name": "tilannehuone-scraper",
+  "version": "0.0.1",
+  "description": "Scraper to scrape from Tilannehuone.fi",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Metatavu/tilannehuone-scraper.git"
+  },
+  "author": "",
+  "license": "LGPLv3",
+  "bugs": {
+    "url": "https://github.com/6aika/Metatavu/tilannehuone-scraper/issues"
+  },
+  "homepage": "https://github.com/Metatavu/tilannehuone-scraper#readme",
+  "dependencies": {
+    "async-promises": "^0.2.0",
+    "bluebird": "^3.5.0",
+    "cheerio": "^0.22.0",
+    "command-line-args": "^4.0.2",
+    "command-line-usage": "^4.0.0",
+    "feederjs": "^1.0.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "normalize-space": "^1.0.2",
+    "request": "^2.81.0"
+  }
+}
