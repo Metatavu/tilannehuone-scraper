@@ -37,8 +37,8 @@
             
             let sources = [];
             let description = null;
-            let latitude;
-            let longitude;
+            let latitude = null;
+            let longitude = null;
             
             if (infoElement.text() !== 'Hälytyksestä ei ole tarkempaa tietoa.') {
               sources = _.map(infoElement.find('a'), (link) => {
