@@ -10,18 +10,21 @@
   const util = require('util');
   const _ = require('lodash');
   const normalize = require('normalize-space');
+  const entities = new require('html-entities').XmlEntities;
 
   class PageScraper {
     
-    scapePage(id, published) {
+    scapePage(id, time) {
       return new Promise((resolve, reject) => {
-        this.getParsedHtml({ url: util.format('http://www.tilannehuone.fi/tehtava.php?hash=%s', id) })
+        const url = util.format('http://www.tilannehuone.fi/tehtava.php?hash=%s', id);
+        
+        this.getParsedHtml({ url: url })
           .then(($) => {
             const location = $('.tehtavataulu h1').text();
             const details = $('.tehtavataulu h2').text();
-            const detailsMatch = /([A-Za-z]*)(: ){0,1}(.*){0,1}/.exec(details);
-            const type = detailsMatch.length ? detailsMatch[1] : null;
-            const extent = detailsMatch.length === 4 ? detailsMatch[3] : null;
+            const extentIndex = details.lastIndexOf(':');
+            const type = extentIndex !== -1 ? _.trim(details.substring(0, extentIndex)) : details;
+            const extent = extentIndex !== -1 ? _.trim(details.substring(extentIndex + 1)) : null;
             const infoElement = $('.infotxt');
             
             let sources = [];
@@ -66,8 +69,9 @@
             
             resolve({
               id: id,
+              url: url,
               location: location,
-              published: published.toISOString(),
+              time: time.toISOString(),
               description: description,
               extent: extent,
               type: type,
@@ -85,7 +89,7 @@
       return new Promise((resolve, reject) => {
         this.doRequest(options)
           .then((body) => {
-            resolve(cheerio.load(body));   
+            resolve(cheerio.load(entities.decode(body)));   
           })
           .catch(reject);     
       });
