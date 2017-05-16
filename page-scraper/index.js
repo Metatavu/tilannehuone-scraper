@@ -7,10 +7,13 @@
   const Promise = require('bluebird');
   const cheerio = require('cheerio');
   const request = require('request');
+  const winston = require('winston');
   const util = require('util');
+  const moment = require('moment');
   const _ = require('lodash');
   const normalize = require('normalize-space');
   const entities = new require('html-entities').XmlEntities;
+  const areas = require('../areas');
 
   class PageScraper {
     
@@ -26,6 +29,11 @@
             const type = extentIndex !== -1 ? _.trim(details.substring(0, extentIndex)) : details;
             const extent = extentIndex !== -1 ? _.trim(details.substring(extentIndex + 1)) : null;
             const infoElement = $('.infotxt');
+            const area = location ? areas[location] || null : null;
+            
+            if (!area) {
+             winston.log('warn', util.format('Could not determine area for location %s', location));
+            }
             
             let sources = [];
             let description = null;
@@ -71,6 +79,7 @@
               id: id,
               url: url,
               location: location,
+              area: area,
               time: time.toISOString(),
               description: description,
               extent: extent,
