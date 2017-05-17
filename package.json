@@ -1,6 +1,6 @@
 {
   "name": "tilannehuone-scraper",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Scraper to scrape from Tilannehuone.fi",
   "main": "app.js",
   "scripts": {
