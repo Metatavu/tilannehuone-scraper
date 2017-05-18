@@ -33,7 +33,11 @@
     if (fs.existsSync(outputFile)) {
       const data = fs.readFileSync(outputFile);
       if (data) {
-        emergencies = JSON.parse(data);
+        try {
+          emergencies = JSON.parse(data);
+        } catch (e) {
+          winston.log('warn', 'Failed to parse JSON file');
+        }
       }
     }
     
